@@ -40,9 +40,7 @@
         "CMAKE_INSTALL_RPATH_USE_LINK_PATH": "TRUE"
       },
       "environment": {
-        "NINJA_STATUS": "[run %r|beg %s|fin %f|tot %t|rate %o|time %e]:",
-        "CCACHE_TEMPDIR": "${sourceDir}/build/ccache-tmp",
-        "CCACHE_DIR": "${sourceDir}/build/ccache"
+        "NINJA_STATUS": "[run %r|beg %s|fin %f|tot %t|rate %o|time %e]:"
       }
     },
     {
@@ -214,67 +212,35 @@
   "buildPresets": [
     {
       "name": "debug-conan",
-      "configurePreset": "debug-conan",
-      "environment": {
-        "CCACHE_TEMPDIR": "${sourceDir}/build/ccache-tmp",
-        "CCACHE_DIR": "${sourceDir}/build/ccache"
-      }
+      "configurePreset": "debug-conan"
     },
     {
       "name": "release-find",
-      "configurePreset": "release-find",
-      "environment": {
-        "CCACHE_TEMPDIR": "${sourceDir}/build/ccache-tmp",
-        "CCACHE_DIR": "${sourceDir}/build/ccache"
-      }
+      "configurePreset": "release-find"
     },
     {
       "name": "release-cmake",
-      "configurePreset": "release-cmake",
-      "environment": {
-        "CCACHE_TEMPDIR": "${sourceDir}/build/ccache-tmp",
-        "CCACHE_DIR": "${sourceDir}/build/ccache"
-      }
+      "configurePreset": "release-cmake"
     },
     {
       "name": "release-conan",
-      "configurePreset": "release-conan",
-      "environment": {
-        "CCACHE_TEMPDIR": "${sourceDir}/build/ccache-tmp",
-        "CCACHE_DIR": "${sourceDir}/build/ccache"
-      }
+      "configurePreset": "release-conan"
     },
     {
       "name": "kraken",
-      "configurePreset": "kraken",
-      "environment": {
-        "CCACHE_TEMPDIR": "${sourceDir}/build/ccache-tmp",
-        "CCACHE_DIR": "${sourceDir}/build/ccache"
-      }
+      "configurePreset": "kraken"
     },
     {
       "name": "github-actions-cmake",
-      "configurePreset": "github-actions-cmake",
-      "environment": {
-        "CCACHE_TEMPDIR": "${sourceDir}/build/ccache-tmp",
-        "CCACHE_DIR": "${sourceDir}/build/ccache"
-      }
+      "configurePreset": "github-actions-cmake"
     },
     {
       "name": "github-actions-conan",
-      "configurePreset": "github-actions-conan",
-      "environment": {
-        "CCACHE_TEMPDIR": "${sourceDir}/build/ccache-tmp",
-        "CCACHE_DIR": "${sourceDir}/build/ccache"
-      }
+      "configurePreset": "github-actions-conan"
     },
     {
       "name": "github-actions-conan-clang",
-      "configurePreset": "github-actions-conan-clang",
-      "environment": {
-        "CCACHE_TEMPDIR": "${sourceDir}/build/ccache-tmp",
-        "CCACHE_DIR": "${sourceDir}/build/ccache"
-      }
+      "configurePreset": "github-actions-conan-clang"
     }
   ],
   "testPresets": [

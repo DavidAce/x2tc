@@ -17,8 +17,6 @@ jobs:
       contents: read
     env:
       cache-name: cache-v1-${{ matrix.compiler }}-${{ matrix.manager }}
-      CCACHE_DIR: ${{ github.workspace }}/.ccache
-      CCACHE_BASEDIR: ${{ github.workspace }}
       CCACHE_SLOPPINESS: include_file_mtime,pch_defines,time_macros
       CCACHE_MAXSIZE: 384M
       INSTALL_DIR: ${{ github.workspace }}/install/github-actions-${{ matrix.manager }}
@@ -66,13 +64,15 @@ jobs:
         run: sudo apt-get install ccache ninja-build mold -y
 
       - name: Prepare cache directories
-        run: mkdir -p "$CCACHE_DIR" ~/.conan2 "$INSTALL_DIR"
+        run: mkdir -p ~/.ccache ~/.cache/ccache ~/.conan2 "$INSTALL_DIR"
 
       - name: Restore ccache
         id: restore-ccache
         uses: actions/cache/restore@v5
         with:
-          path: ${{ env.CCACHE_DIR }}
+          path: |
+            ~/.ccache
+            ~/.cache/ccache
           key: ${{ github.workflow }}-${{ env.cache-name }}-ccache-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
             ${{ github.workflow }}-${{ env.cache-name }}-ccache-
@@ -151,7 +151,9 @@ jobs:
         uses: actions/cache/save@v5
         continue-on-error: true
         with:
-          path: ${{ env.CCACHE_DIR }}
+          path: |
+            ~/.ccache
+            ~/.cache/ccache
           key: ${{ steps.restore-ccache.outputs.cache-primary-key }}
 
       - name: Save dependency install cache
