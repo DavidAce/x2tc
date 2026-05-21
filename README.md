@@ -42,6 +42,15 @@ int main() {
 }
 ```
 
+More complete examples are available in `examples/`. They can be built with:
+
+```bash
+cmake -S . -B build/examples \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DX2TC_BUILD_EXAMPLES=ON
+cmake --build build/examples --target build-all-examples
+```
+
 ## Install
 
 Clone the repository and configure with CMake:
@@ -95,9 +104,10 @@ target_link_libraries(my_program PRIVATE x2tc::x2tc)
 
 ## CMake Options
 
-| Option               | Default | Description                                                                                                                    |
-|:---------------------|:--------|:-------------------------------------------------------------------------------------------------------------------------------|
-| `X2TC_ENABLE_32BIT`  | `OFF`   | Compile `float` and `std::complex<float>` instantiations.                                                                      |
-| `X2TC_ENABLE_64BIT`  | `ON`    | Compile `double` and `std::complex<double>` instantiations.                                                                    |
-| `X2TC_ENABLE_80BIT`  | `OFF`   | Compile `long double` and `std::complex<long double>` instantiations.                                                          |
-| `X2TC_ENABLE_128BIT` | `OFF`   | Compile `std::float128_t` and `std::complex<std::float128_t>` instantiations. Requires compiler support for `std::float128_t`. |
+| Option                 | Default | Description                                                                                                                    |
+|:-----------------------|:--------|:-------------------------------------------------------------------------------------------------------------------------------|
+| `X2TC_ENABLE_32BIT`    | `OFF`   | Compile `float` and `std::complex<float>` instantiations.                                                                      |
+| `X2TC_ENABLE_64BIT`    | `ON`    | Compile `double` and `std::complex<double>` instantiations.                                                                    |
+| `X2TC_ENABLE_80BIT`    | `OFF`   | Compile `long double` and `std::complex<long double>` instantiations.                                                          |
+| `X2TC_ENABLE_128BIT`   | `OFF`   | Compile `std::float128_t` and `std::complex<std::float128_t>` instantiations. Requires compiler support for `std::float128_t`. |
+| `X2TC_BUILD_EXAMPLES`  | `OFF`   | Build the example programs in `examples/`.                                                                                     |

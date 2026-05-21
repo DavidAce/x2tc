@@ -11,6 +11,7 @@ include(CMakePackageConfigHelpers)
 list(INSERT CMAKE_MODULE_PATH 0 ${PROJECT_SOURCE_DIR}/cmake/modules)
 
 option(X2TC_ENABLE_TESTS "Enable unit testing with ctest" ON)
+option(X2TC_BUILD_EXAMPLES "Build example programs" OFF)
 option(X2TC_CMAKE_DEBUG "Print extra CMake configuration details" OFF)
 
 option(COMPILER_PROFILE_BUILD "Enable -ftime-trace where supported" OFF)
@@ -94,6 +95,10 @@ install(EXPORT x2tcTargets
 if(X2TC_ENABLE_TESTS)
     enable_testing()
     add_subdirectory(tests)
+endif()
+
+if(X2TC_BUILD_EXAMPLES)
+    add_subdirectory(examples)
 endif()
 
 if(X2TC_CMAKE_DEBUG)
