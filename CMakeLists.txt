@@ -88,6 +88,8 @@ install(FILES
         "${CMAKE_CURRENT_BINARY_DIR}/x2tcConfigVersion.cmake"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/x2tc")
 
+install(DIRECTORY cmake/modules DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/x2tc")
+
 install(EXPORT x2tcTargets
         NAMESPACE x2tc::
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/x2tc")
