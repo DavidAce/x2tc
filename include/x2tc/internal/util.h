@@ -21,7 +21,11 @@ namespace x2 {
 
         if (n == 0) return RealScalar{0};
 
+#if defined(X2TC_USE_FLOAT128)
         using RealAcc = std::conditional_t<sizeof(RealScalar) <= sizeof(double), long double, fp128>;
+#else
+        using RealAcc = long double;
+#endif
         RealAcc sum = RealAcc{0};
 
 #pragma omp parallel for reduction(+ : sum) schedule(static)
