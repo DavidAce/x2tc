@@ -10,7 +10,7 @@ include(CMakePackageConfigHelpers)
 
 list(INSERT CMAKE_MODULE_PATH 0 ${PROJECT_SOURCE_DIR}/cmake/modules)
 
-option(X2TC_ENABLE_TESTS "Enable unit testing with ctest" ON)
+option(X2TC_ENABLE_TESTS "Enable unit testing with ctest" OFF)
 option(X2TC_BUILD_EXAMPLES "Build example programs" OFF)
 option(X2TC_CMAKE_DEBUG "Print extra CMake configuration details" OFF)
 

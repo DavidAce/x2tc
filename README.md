@@ -110,4 +110,5 @@ target_link_libraries(my_program PRIVATE x2tc::x2tc)
 | `X2TC_ENABLE_64BIT`    | `ON`    | Compile `double` and `std::complex<double>` instantiations.                                                                    |
 | `X2TC_ENABLE_80BIT`    | `OFF`   | Compile `long double` and `std::complex<long double>` instantiations.                                                          |
 | `X2TC_ENABLE_128BIT`   | `OFF`   | Compile `std::float128_t` and `std::complex<std::float128_t>` instantiations. Requires compiler support for `std::float128_t`. |
+| `X2TC_ENABLE_TESTS`    | `OFF`   | Build the test programs and enable CTest.                                                                                      |
 | `X2TC_BUILD_EXAMPLES`  | `OFF`   | Build the example programs in `examples/`.                                                                                     |
