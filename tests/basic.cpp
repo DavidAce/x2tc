@@ -1,13 +1,13 @@
 #include <x2tc/x2tc.h>
 
 #include <cmath>
-#include <iostream>
+#include <print>
 #include <type_traits>
 
 namespace {
     void require(bool ok, const char *msg) {
         if(!ok) {
-            std::cerr << msg << '\n';
+            std::println(stderr, "{}", msg);
             std::exit(1);
         }
     }
@@ -37,4 +37,3 @@ int main() {
 
     return 0;
 }
-
