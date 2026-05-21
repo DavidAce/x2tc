@@ -1,0 +1,67 @@
+cmake_minimum_required(VERSION 3.24)
+
+if(NOT TARGET x2tc-config)
+    add_library(x2tc-config INTERFACE)
+endif()
+
+target_compile_features(x2tc-config INTERFACE cxx_std_23)
+target_compile_options(x2tc-config INTERFACE $<$<COMPILE_LANGUAGE:CXX>:${COMPILER_EXTRA_WARNINGS}>)
+target_compile_options(x2tc-config INTERFACE
+                       $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<CXX_COMPILER_ID:MSVC>>:/W4>
+                       $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<NOT:$<CXX_COMPILER_ID:MSVC>>>:-Wall -Wextra -Wpedantic -Wunused -Wformat>)
+
+if(COMPILER_PROFILE_BUILD)
+    target_compile_options(x2tc-config INTERFACE $<$<COMPILE_LANG_AND_ID:CXX,Clang>:-ftime-trace>)
+endif()
+
+if(COMPILER_ENABLE_ASAN)
+    set(ASAN_FLAGS -fno-omit-frame-pointer -fsanitize=address,leak,pointer-compare,pointer-subtract)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+        list(APPEND ASAN_FLAGS -fsanitize=implicit-conversion)
+    endif()
+    target_compile_options(x2tc-config INTERFACE $<$<COMPILE_LANGUAGE:CXX>:${ASAN_FLAGS}>)
+    target_link_options(x2tc-config INTERFACE ${ASAN_FLAGS})
+endif()
+
+if(COMPILER_ENABLE_USAN)
+    set(USAN_FLAGS -fno-omit-frame-pointer -fsanitize-undefined-trap-on-error -fsanitize=undefined,alignment,bounds,return,enum,float-cast-overflow,signed-integer-overflow)
+    target_compile_options(x2tc-config INTERFACE $<$<COMPILE_LANGUAGE:CXX>:${USAN_FLAGS}>)
+    target_link_options(x2tc-config INTERFACE ${USAN_FLAGS})
+endif()
+
+if(COMPILER_ENABLE_COVERAGE)
+    target_compile_options(x2tc-config INTERFACE --coverage)
+    target_link_options(x2tc-config INTERFACE --coverage)
+endif()
+
+function(target_enable_static_libgcc tgt)
+    if(BUILD_SHARED_LIBS)
+        return()
+    endif()
+    target_link_options(${tgt} BEFORE PUBLIC
+                        $<$<COMPILE_LANG_AND_ID:CXX,GNU>:-static-libstdc++ -static-libgcc>
+                        $<$<COMPILE_LANG_AND_ID:CXX,Clang>:-static-libgcc>)
+endfunction()
+
+function(target_link_precompiled_headers tgt)
+    if(COMPILER_ENABLE_PCH)
+        set(PCH_HEADERS <string> <string_view> <vector> <array> <complex> <memory> <algorithm> <utility> <type_traits> <cmath> <numeric> <stdexcept>)
+        get_target_property(type ${tgt} TYPE)
+        if(type MATCHES "EXECUTABLE")
+            if(NOT TARGET x2tc-pch-exe)
+                add_executable(x2tc-pch-exe ${PROJECT_SOURCE_DIR}/cmake/pch.cpp)
+                target_link_libraries(x2tc-pch-exe PUBLIC x2tc-config)
+                target_precompile_headers(x2tc-pch-exe PUBLIC ${PCH_HEADERS})
+                target_enable_static_libgcc(x2tc-pch-exe)
+            endif()
+            target_precompile_headers(${tgt} REUSE_FROM x2tc-pch-exe)
+        else()
+            if(NOT TARGET x2tc-pch-obj)
+                add_library(x2tc-pch-obj OBJECT ${PROJECT_SOURCE_DIR}/cmake/pch.cpp)
+                target_link_libraries(x2tc-pch-obj PUBLIC x2tc-config)
+                target_precompile_headers(x2tc-pch-obj PUBLIC ${PCH_HEADERS})
+            endif()
+            target_precompile_headers(${tgt} REUSE_FROM x2tc-pch-obj)
+        endif()
+    endif()
+endfunction()

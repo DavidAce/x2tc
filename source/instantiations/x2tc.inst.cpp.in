@@ -1,0 +1,35 @@
+#include <x2tc/x2tc.h>
+
+template struct x2::Matrix<@SCALAR@>;
+template struct x2::MatrixMap<@SCALAR@>;
+template struct x2::ConstMatrixMap<@SCALAR@>;
+
+template class x2::Tensor<@SCALAR@, 3>;
+template class x2::TensorMap<@SCALAR@, 3>;
+template class x2::ConstTensorMap<@SCALAR@, 3>;
+template class x2::Tensor<@SCALAR@, 4>;
+template class x2::TensorMap<@SCALAR@, 4>;
+template class x2::ConstTensorMap<@SCALAR@, 4>;
+
+template void x2::x2_split<@SCALAR@>(x2::Matrix<@SCALAR@> &, const typename x2::Matrix<@SCALAR@>::MatrixType &);
+
+template void x2::gemm_x2<@SCALAR@, 4, 3, 3>(x2::X2TensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 3> &);
+template void x2::gemm_x2<@SCALAR@, 4, 3, 3>(x2::X2TensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 3> &);
+template void x2::gemm_x2<@SCALAR@, 4, 3, 3>(x2::X2TensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 3> &);
+template void x2::gemm_x2<@SCALAR@, 4, 3, 3>(x2::X2TensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 3> &);
+
+template void x2::gemm_x2<@SCALAR@, 4, 4, 4>(x2::X2TensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 4> &);
+template void x2::gemm_x2<@SCALAR@, 4, 4, 4>(x2::X2TensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 4> &);
+template void x2::gemm_x2<@SCALAR@, 4, 4, 4>(x2::X2TensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 4> &);
+template void x2::gemm_x2<@SCALAR@, 4, 4, 4>(x2::X2TensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 4> &);
+
+template void x2::gemm_x2<@SCALAR@, 3, 3, 4>(x2::X2TensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 4> &);
+template void x2::gemm_x2<@SCALAR@, 3, 3, 4>(x2::X2TensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 4> &);
+template void x2::gemm_x2<@SCALAR@, 3, 3, 4>(x2::X2TensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 4> &);
+template void x2::gemm_x2<@SCALAR@, 3, 3, 4>(x2::X2TensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 4> &);
+
+template void x2::gemm_x2<@SCALAR@, 3, 4, 3>(x2::X2TensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 3> &);
+template void x2::gemm_x2<@SCALAR@, 3, 4, 3>(x2::X2TensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 3> &);
+template void x2::gemm_x2<@SCALAR@, 3, 4, 3>(x2::X2TensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstTensorAsMatrixView<@SCALAR@, 3> &);
+template void x2::gemm_x2<@SCALAR@, 3, 4, 3>(x2::X2TensorAsMatrixView<@SCALAR@, 3> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 4> &, const x2::ConstX2TensorAsMatrixView<@SCALAR@, 3> &);
+

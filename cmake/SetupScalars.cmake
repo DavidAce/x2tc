@@ -1,0 +1,48 @@
+cmake_minimum_required(VERSION 3.24)
+
+option(X2TC_ENABLE_32BIT "Build explicit instantiations for fp32/cx32" OFF)
+option(X2TC_ENABLE_64BIT "Build explicit instantiations for fp64/cx64" ON)
+option(X2TC_ENABLE_80BIT "Build explicit instantiations for fp80/cx80" OFF)
+option(X2TC_ENABLE_128BIT "Build explicit instantiations for std::float128_t/cx128" OFF)
+
+if(NOT TARGET x2tc-config)
+    add_library(x2tc-config INTERFACE)
+endif()
+
+set(X2TC_ENABLED_SCALARS "")
+if(X2TC_ENABLE_32BIT)
+    list(APPEND X2TC_ENABLED_SCALARS fp32 cx32)
+endif()
+if(X2TC_ENABLE_64BIT)
+    list(APPEND X2TC_ENABLED_SCALARS fp64 cx64)
+endif()
+if(X2TC_ENABLE_80BIT)
+    list(APPEND X2TC_ENABLED_SCALARS fp80 cx80)
+endif()
+if(X2TC_ENABLE_128BIT)
+    include(cmake/CheckStdFloat128.cmake)
+    check_std_float128_t()
+    list(APPEND X2TC_ENABLED_SCALARS fp128 cx128)
+    list(APPEND X2TC_PUBLIC_SCALAR_DEFINITIONS X2TC_USE_FLOAT128)
+endif()
+
+if(NOT X2TC_ENABLED_SCALARS)
+    message(FATAL_ERROR "At least one explicit-instantiation scalar must be enabled")
+endif()
+
+foreach(x2tc_scalar IN LISTS X2TC_ENABLED_SCALARS)
+    message(STATUS "Enabled scalar type: ${x2tc_scalar}")
+    string(TOUPPER "${x2tc_scalar}" x2tc_scalar_upper)
+    target_compile_definitions(x2tc-config INTERFACE X2TC_ENABLE_${x2tc_scalar_upper})
+endforeach()
+
+if(X2TC_PUBLIC_SCALAR_DEFINITIONS)
+    target_compile_definitions(x2tc-config INTERFACE ${X2TC_PUBLIC_SCALAR_DEFINITIONS})
+endif()
+
+function(x2tc_apply_scalar_config tgt)
+    if(X2TC_PUBLIC_SCALAR_DEFINITIONS)
+        target_compile_definitions(${tgt} PUBLIC ${X2TC_PUBLIC_SCALAR_DEFINITIONS})
+    endif()
+endfunction()
+
